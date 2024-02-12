@@ -1,0 +1,24 @@
+import random
+
+def generate_random_color():
+    return "#{:06x}".format(random.randint(0, 0xFFFFFF))
+
+def generate_random_css_property():
+    properties = ["font-size", "color", "background-color", "margin", "padding", "border"]
+    property_name = random.choice(properties)
+    property_value = random.randint(1, 50) if property_name not in ["color", "background-color"] else generate_random_color()
+    return f"{property_name}: {property_value}px;"
+
+def generate_random_css_rule():
+    selector = f".class{random.randint(1, 10)}"
+    properties = [generate_random_css_property() for _ in range(random.randint(1, 5))]
+    return f"{selector} {{ {' '.join(properties)} }}"
+
+def generate_random_css_file(num_rules):
+    css_content = "\n".join(generate_random_css_rule() for _ in range(num_rules))
+    with open("random_styles.css", "w") as file:
+        file.write(css_content)
+
+# Specify the number of random CSS rules you want
+number_of_rules = 10
+generate_random_css_file(number_of_rules)
